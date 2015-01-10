@@ -1,0 +1,47 @@
+Build:
+To build, I had to install npm and then
+npm install uglifyjs
+Then I had to make a symlink to no
+
+
+To get StringIO working, and thus my implementation of StringIO:
+I got the latest Opal, complete with StringIO 
+then I did a rake dist, and used three .js files in the build dir:
+    <script src="file:///home/ethan/opal.js"> </script>
+    <script src="file:///home/ethan/opal-parser.js"> </script>
+    <script src="file:///home/ethan/code_exec_opal.js"> </script>
+
+(no need to include the stringio.js explicitly)
+
+** I then built the latest beta gem in the opal directory:
+
+gem build opal.gemspec
+gem install opal-0.7.0.beta4.gem
+
+then I could run my compile opal script:
+#!/usr/bin/env ruby
+
+require 'opal'
+require 'opt_simple'
+
+defaults = {}
+opts = OptSimple.new(defaults).parse_opts! do 
+  argument %w[-i --infile], "Input ruby file for compiling", "FILE"
+  argument %w[-o --outfile], "Output javascript", "FILE"
+end
+
+File.open(opts.outfile,'w').write(Opal.compile(File.read(opts.infile)))
+
+
+## ** But, there was an extra '$' around $$proto in the .js file, so I removed it. 
+
+Then I could use opal.html 
+
+
+
+**** Instead of using the beta version of Opal, I may be able to do the following:
+use StringIO, build with 0.6.3, but just call exec_ruby using: Opal.Opal.$proto.$exec_ruby
+****
+
+* to build with 0.7.0-beta4, programming/ruby/opal_compile.rb -i code_exec_opal.rb -o code_exec_opal.0.7.0.fix2.js
+* to build with 0.6.*, edit the Gemfile and do bundler exec  programming/ruby/opal_compile.rb -i code_exec_opal.rb -o code_exec_opal.0.6.*.js
