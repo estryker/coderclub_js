@@ -1,0 +1,48 @@
+<html>
+  <head>
+<!--
+With opal0.6.3:
+ <script src="file:///home/ethan/opal.js"> </script>
+    <script src="file:///home/ethan/opal-parser.js"> </script>
+ <script src="file:///home/ethan/code_exec_opal-0.6.3.js"> </script>
+<input name="commit" onclick="Opal.Opal.$exec_ruby" type="submit" value="Run!" />
+
+With opal 0.7:  
+   <script src="file:///home/ethan/opal/build/opal.js"> </script>
+    <script src="file:///home/ethan/opal/build/opal-parser.js"> </script>
+   <script src="file:///home/ethan/opal/build/stringio.js"></script>
+ <script src="file:///home/ethan/code_exec_opal.0.7.fix.js"> </script>
+<input name="commit" onclick="Opal.Opal.$proto.$exec_ruby(code.value)" type="button" value="Run!" />
+
+
+With opal0.6:
+Opal.Opal.$exec_ruby(code.value)
+<input name="commit" onclick="Opal.Opal.$exec_ruby" type="submit" value="Run!" />
+With opal 0.7:
+ <input name="commit" onclick="Opal.Opal.$proto.$exec_ruby" type="submit" value="Run!" />
+-->
+  <script src="file:///home/ethan/opal.js"> </script>
+  <script src="file:///home/ethan/opal-parser.js"> </script>
+   <script src="file:///home/ethan/opal/build/stringio.js"></script>
+  <script src="file:///home/ethan/code_exec_opal.0.6.3.js"> </script>
+
+  </head>
+  <!-- TODO: update a div within the page with the output of this. --> 
+  <script >
+    function exec_ruby_orig(code) {
+      console.warn(code); 
+      alert(Opal.eval(code));
+   }  
+  </script>
+  <body>
+    <!-- without the method="post", I needed semicolons at the end of each line -->
+    
+    <textarea cols="50" id="code" name="code" rows="10"></textarea>
+    <input name="commit" onclick="Opal.Opal.$proto.$exec_ruby(code.value)" type="button" value="Run!" />
+    <!-- </form> -->
+    <!-- this will hold the stdout/return statement on success, and a red error message on error -->
+
+    <div id="code_output">
+    </div>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>  
+    <script src="file:///home/ethan/opal/build/opal.js"> </script>
+    <script src="file:///home/ethan/opal/build/opal-parser.js"> </script>
+    <script src="file:///home/ethan/opal/build/erb.js"></script>
+    <script src="file:///home/ethan/opal/build/math.js"></script>
+    <script src="file:///home/ethan/coderclub_js/turtle_exec.js"> </script>
+    
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="codemirror-4.11/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-4.11/lib/codemirror.css">
+    <script src="codemirror-4.11/mode/ruby/ruby.js"></script>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="page-header"><h1>Ruby Turtle!</h1></div>
+  
+      <div class="row" id="wrapper">
+	<div id="editor_wrapper" class="col-md-6">
+	  <textarea cols="50" class="well" style="padding:0" id="code" name="code" rows="10">colors = %w[red orange yellow green]
+Turtle.draw do
+   4.times do | i |
+     pencolor colors[i % 4]
+     forward 100
+     turnright 90
+   end
+end
+</textarea>
+	  <script> var myCodeMirror = CodeMirror.fromTextArea(code, {mode: "ruby", lineNumbers: true });
+	  </script>
+<!-- 
+	  <input name="commit" class="btn btn-primary" onclick="Opal.Opal.$turtle_exec(code.value)" type="button" value="Draw! (Cmd+Enter)" />
+--> <input name="commit" class="btn btn-primary" onclick="Opal.Opal.$turtle_exec(myCodeMirror.getValue())" type="button" value="Draw! (Cmd+Enter)" />
+	</div>
+
+	<div class="col-md-6">
+	  <div id="output" class="well" style="padding:0">
+	    <canvas id="mycanvas" height="500" width="800">
+	  </div>
+	</div>
+      </div>
+      
+	
+      <div id="code_output">
+      </div>
+      
+    </div>
+
+  </body>
+</html>

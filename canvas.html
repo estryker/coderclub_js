@@ -1,0 +1,32 @@
+<html>
+  <head>
+
+  </head>
+
+  <body>
+    
+
+    <canvas id="mycanvas" height="500" width="800">
+      <style>
+        body { margin: 0; padding: 0; background: #666; color: #000; font: 15px Helvetica; }
+        p { margin-left: 10px; }
+        a { color: #006; }
+      </style>
+      <script>
+	<!-- too many get context calls to mimic what I'm doing in opal -->
+	document.getElementById("mycanvas").getContext("2d").strokeStyle= "#000";
+	
+	document.getElementById("mycanvas").getContext("2d").lineWidth = 5;
+	
+	document.getElementById("mycanvas").getContext("2d").fillStyle = "";
+	
+	document.getElementById("mycanvas").getContext("2d").beginPath();
+	document.getElementById("mycanvas").getContext("2d").moveTo(0,0);
+	document.getElementById("mycanvas").getContext("2d").lineTo(100, 100);
+	document.getElementById("mycanvas").getContext("2d").lineTo(100, 200);
+	document.getElementById("mycanvas").getContext("2d").stroke();
+    </script>
+
+  </body>
+
+</html>
