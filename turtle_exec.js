@@ -3,7 +3,7 @@
   Opal.dynamic_require_severity = "error";
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$require', '$/', '$empty?', '$to_s', '$new', '$instance_eval', '$to_proc', '$close!', '$start', '$fill', '$>', '$stroke', '$turtlewax_goto', '$-', '$*', '$to_i', '$<', '$toRad', '$+', '$cos', '$sin', '$draw!', '$sleep', '$turn', '$forward', '$%', '$abs', '$[]', '$rgb', '$class', '$eval', '$message', '$join', '$backtrace', '$html_escape']);
+  Opal.add_stubs(['$require', '$/', '$empty?', '$begin_path', '$to_s', '$new', '$instance_eval', '$to_proc', '$start', '$fill', '$>', '$stroke', '$turtlewax_goto', '$-', '$*', '$to_i', '$<', '$toRad', '$+', '$cos', '$sin', '$draw!', '$sleep', '$turn', '$forward', '$%', '$abs', '$[]', '$rgb', '$class', '$eval', '$message', '$join', '$backtrace', '$html_escape']);
   self.$require("erb");
   (function($base, $super) {
     function $Turtle(){};
@@ -35,10 +35,9 @@
      canvas = document.getElementById("mycanvas");
      context = canvas.getContext("2d");
      context.clearRect( 0 , 0 , canvas.width, canvas.height);
-     context.beginPath();
-     context.moveTo(self.x,self.x);
-     console.log(self.$to_s());
-     ;
+     
+      self.$begin_path();
+      return console.log(self.$to_s());;
     };
 
     def.$to_s = function() {
@@ -55,8 +54,7 @@
       t = self.$new();
       console.log( "done making self" );
       ($a = ($b = t).$instance_eval, $a.$$p = script.$to_proc(), $a).call($b);
-      console.log( "done with eval in start" );
-      return t['$close!']();
+      return console.log( "done with eval in start" );
     });
 
     Opal.defs($scope.get('Turtle'), '$draw', TMP_2 = function() {
@@ -81,11 +79,16 @@
     def.$begin_path = function() {
       var self = this;
 
-      console.log( "begin path" );
-      document.getElementById("mycanvas").getContext("2d").beginPath();
+      
+    console.log( "begin path" )
+    context = document.getElementById("mycanvas").getContext("2d");
+    context.beginPath();
+     context.moveTo(self.x,self.y);
+     console.log("starting at " + self.x + "," + self.y);
+    ;
     };
 
-    def['$close!'] = function() {
+    def.$close = function() {
       var self = this;
 
       document.getElementById("mycanvas").getContext("2d").closePath();
@@ -102,8 +105,10 @@
       };
       if (self.lineWidth['$>'](0)) {
         console.log("stroke");
-        self.$stroke();};
-      return console.log("closing");
+        return self.$stroke();
+        } else {
+        return nil
+      };
     };
 
     def.$background = function(color) {
@@ -192,19 +197,21 @@
     def.$forward = function(distance) {
       var $a, self = this, a = nil;
 
-      console.log( "forward");
-      console.log( distance);
+      console.log("beginning a new path");
+      self.$begin_path();
+      console.log( "forward " + distance);;
       a = self.$toRad(self.dir);
       self.x = self.x['$+'](distance['$*']($scope.get('Math').$cos(a)));
       self.y = self.y['$+'](distance['$*']($scope.get('Math').$sin(a)));
+      console.log("going forward to " + self.x + "," + self.y);;
       if ((($a = self.pen) !== nil && (!$a.$$is_boolean || $a == true))) {
         console.log( "lineto" );
         document.getElementById("mycanvas").getContext("2d").lineTo(self.x, self.y);;
-        self['$draw!']();
         } else {
         console.log( "moveto" );
         document.getElementById("mycanvas").getContext("2d").moveTo(self.x, self.y);;
       };
+      self['$draw!']();
       return self.$sleep((100)['$-'](self.speed));
     };
 
@@ -219,8 +226,7 @@
     def.$turn = function(degrees) {
       var self = this;
 
-      console.log( "turn");
-      console.log( degrees);
+      console.log( "turn " + degrees);;
       self.dir = self.dir['$+'](degrees);
       return self.dir = self.dir['$%'](360);
     };

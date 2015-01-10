@@ -35,10 +35,10 @@ class Turtle
      canvas = document.getElementById("mycanvas");
      context = canvas.getContext("2d");
      context.clearRect( 0 , 0 , canvas.width, canvas.height);
-     context.beginPath();
-     context.moveTo(#{@x},#{@x});
-     console.log(#{self.to_s});
      }
+     self.begin_path
+     `console.log(#{self.to_s});`
+     
   end
   def to_s
     "x: #{@x} y: #{@y} dir: #{@dir} pen down? #{@pen} linewidth: #{@lineWidth} fillStyle=\'#{@fillStyle}\'"
@@ -61,7 +61,6 @@ class Turtle
     # drawing commands using the stroke() method
     # t.draw! 
 
-    t.close!
   end
 
   # opal doesn't seem to alias this well. 
@@ -77,12 +76,21 @@ class Turtle
     `document.getElementById("mycanvas").getContext("2d").fill();`
   end
 
+  # convenience method to begin a new path and to set your
+  # current location to @x, @y
+  # see: http://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_canvas_beginpath
   def begin_path
-    `console.log( "begin path" )`
-    `document.getElementById("mycanvas").getContext("2d").beginPath();`
+    %x{
+    console.log( "begin path" )
+    context = document.getElementById("mycanvas").getContext("2d");
+    context.beginPath();
+     context.moveTo(#{@x},#{@y});
+     console.log("starting at " + #{@x} + "," + #{@y});
+    }
   end
   
-  def close!
+  # this closes the path from current location to the beginning
+  def close
     `document.getElementById("mycanvas").getContext("2d").closePath();`
   end
 
@@ -99,10 +107,6 @@ class Turtle
       `console.log("stroke")`
       self.stroke
     end
-    #`console.log("beginning")`
-    # self.begin_path
-   `console.log("closing")`
-    # self.close
   end
 
   # ex: blue
@@ -176,21 +180,36 @@ class Turtle
       `console.info("setting speed to " + #{s})`
     end
   end
+
+  # Note that we are currently starting a new path for every time
+  # we move forward so that we can change the line style/color at any point. 
+  # With the begin_path and draw! methods, these steps will be followed (with example values filled in):
+  # ctx.beginPath();              
+  # ctx.moveTo(0, 75);
+  # ctx.lineTo(250, 75);
+  # ctx.lineWidth = "5";
+  # ctx.strokeStyle = "green";  // Green path
+  # ctx.stroke();
   def forward(distance)    
-    `console.log( "forward")`
-    `console.log( #{distance})`
+    `console.log("beginning a new path")`
+    self.begin_path # beginpath() and moveTo(@x, @y)
+
+    `console.log( "forward " + #{distance});`
     a = toRad(@dir)
     @x += distance * Math::cos(a)
     @y += distance * Math::sin(a)
-
+     `console.log("going forward to " + #{@x} + "," + #{@y});`
     if @pen
       `console.log( "lineto" )`
       `document.getElementById("mycanvas").getContext("2d").lineTo(#{@x}, #{@y});`
-      self.draw!
     else
       `console.log( "moveto" )`
       `document.getElementById("mycanvas").getContext("2d").moveTo(#{@x}, #{@y});`
     end
+    # make sure the moveTo followed by stroke() doesn't actually draw a line
+    self.draw! # fill(), then stroke()
+
+    # TODO: get this to work! maybe need a javascript native sleep
     sleep(100 - @speed)
   end
 
@@ -201,8 +220,7 @@ class Turtle
   end
 
   def turn(degrees)
-    `console.log( "turn")`
-    `console.log( #{degrees})`
+    `console.log( "turn " + #{degrees});`
     @dir += degrees
     @dir = @dir % 360;
   end
