@@ -18,8 +18,8 @@
       var $a, self = this;
 
       self.dir = -90;
-      self.x = 200;
-      self.y = 200;
+      self.x = 250;
+      self.y = 250;
       self.speed = 1000;
       self.strokeStyle = "\"#000\"";
       document.getElementById("mycanvas").getContext("2d").strokeStyle= self.strokeStyle;;
@@ -259,6 +259,7 @@
       var self = this, w = nil;
 
       w = document.getElementById("mycanvas").width();;
+      console.log( w + w.$to_i());
       return w.$to_i();
     };
 
@@ -266,6 +267,7 @@
       var self = this, h = nil;
 
       h = document.getElementById("mycanvas").height();;
+      console.log( h + h.$to_i());
       return h.$to_i();
     };
 

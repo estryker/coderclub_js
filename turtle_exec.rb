@@ -5,8 +5,8 @@ class Turtle
   @@Rad = Math::PI / 180.0
   def initialize
     @dir = -90
-    @x = 200
-    @y = 200
+    @x = 250 # self.width / 2 # 200
+    @y = 250 # self.height / 2 # 200 
     @speed = 1000
 
     # this.tag = document.getElementById(tag) || tag;
@@ -244,11 +244,13 @@ class Turtle
 
   def width
     w = `document.getElementById("mycanvas").width();`
+    `console.log( #{w} + #{w.to_i})`
     w.to_i
   end
 
   def height
     h = `document.getElementById("mycanvas").height();`
+    `console.log( #{h} + #{h.to_i})`
     h.to_i
   end
 
