@@ -3,7 +3,7 @@
   Opal.dynamic_require_severity = "error";
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$require', '$/', '$empty?', '$begin_path', '$to_s', '$new', '$instance_eval', '$to_proc', '$start', '$fill', '$>', '$stroke', '$turtlewax_goto', '$-', '$*', '$to_i', '$<', '$toRad', '$+', '$cos', '$sin', '$draw!', '$turn', '$forward', '$%', '$abs', '$[]', '$rgb', '$class', '$eval', '$message', '$join', '$backtrace', '$html_escape']);
+  Opal.add_stubs(['$require', '$/', '$empty?', '$begin_path', '$to_s', '$new', '$instance_eval', '$to_proc', '$start', '$fill', '$>', '$stroke', '$forward', '$turtlewax_goto', '$-', '$*', '$to_i', '$<', '$toRad', '$+', '$cos', '$sin', '$draw!', '$turn', '$%', '$abs', '$[]', '$rgb', '$class', '$eval', '$strip', '$message', '$join', '$backtrace', '$html_escape']);
   self.$require("erb");
   (function($base, $super) {
     function $Turtle(){};
@@ -23,7 +23,7 @@
       self.speed = 1000;
       self.strokeStyle = "\"#000\"";
       document.getElementById("mycanvas").getContext("2d").strokeStyle= self.strokeStyle;;
-      self.lineWidth = 1;
+      self.lineWidth = 2;
       document.getElementById("mycanvas").getContext("2d").lineWidth = self.lineWidth;;
       self.fillStyle = "";
       if ((($a = self.fillStyle['$empty?']()) !== nil && (!$a.$$is_boolean || $a == true))) {
@@ -157,6 +157,15 @@
         } else {
         document.getElementById("mycanvas").getContext("2d").moveTo(x, y);
       };
+    };
+
+    def.$jump = function(distance) {
+      var self = this, p = nil;
+
+      p = self.pen;
+      self.pen = false;
+      self.$forward(distance);
+      return self.pen = p;
     };
 
     def.$goto = function(x, y) {
@@ -293,9 +302,10 @@
     try {
     try {
     
-    console.log("running Turtle") 
-    ;
-      self.$eval(code);
+    console.log("running Turtle"); 
+    console.log(code); 
+    
+      self.$eval(code.$strip());
       return  
       document.getElementById('code_output').innerHTML= "Success" 
       console.log("Success") 
@@ -303,9 +313,9 @@
     } catch ($err) {if (Opal.rescue($err, [$scope.get('Exception')])) {e = $err;
       code_error = e.$message()['$+']("\n")['$+'](e.$backtrace().$join("\n"));
       
-    console.warn("error")
-    console.warn(code)
-    console.warn(code_error)
+    console.warn("error");
+    console.warn(code);
+    console.warn(code_error);
     document.getElementById('code_output').innerHTML="<font size=\"3\" color=\"red\">" 
     +  (($scope.get('ERB')).$$scope.get('Util')).$html_escape(code_error) 
     + "</font>"
