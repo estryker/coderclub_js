@@ -3,7 +3,7 @@
   Opal.dynamic_require_severity = "error";
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass, $hash2 = Opal.hash2;
 
-  Opal.add_stubs(['$require', '$/', '$empty?', '$begin_path', '$to_s', '$new', '$instance_eval', '$to_proc', '$start', '$fill', '$>', '$stroke', '$turtlewax_goto', '$-', '$*', '$to_i', '$<', '$toRad', '$+', '$cos', '$sin', '$draw!', '$sleep', '$turn', '$forward', '$%', '$abs', '$[]', '$rgb', '$class', '$eval', '$message', '$join', '$backtrace', '$html_escape']);
+  Opal.add_stubs(['$require', '$/', '$empty?', '$begin_path', '$to_s', '$new', '$instance_eval', '$to_proc', '$start', '$fill', '$>', '$stroke', '$turtlewax_goto', '$-', '$*', '$to_i', '$<', '$toRad', '$+', '$cos', '$sin', '$draw!', '$turn', '$forward', '$%', '$abs', '$[]', '$rgb', '$class', '$eval', '$message', '$join', '$backtrace', '$html_escape']);
   self.$require("erb");
   (function($base, $super) {
     function $Turtle(){};
@@ -20,7 +20,7 @@
       self.dir = -90;
       self.x = 200;
       self.y = 200;
-      self.speed = 100;
+      self.speed = 1000;
       self.strokeStyle = "\"#000\"";
       document.getElementById("mycanvas").getContext("2d").strokeStyle= self.strokeStyle;;
       self.lineWidth = 1;
@@ -83,8 +83,8 @@
     console.log( "begin path" )
     context = document.getElementById("mycanvas").getContext("2d");
     context.beginPath();
-     context.moveTo(self.x,self.y);
-     console.log("starting at " + self.x + "," + self.y);
+    context.moveTo(self.x,self.y);
+    console.log("starting at " + self.x + "," + self.y);
     ;
     };
 
@@ -185,9 +185,9 @@
       var $a, $b, self = this, s = nil;
 
       s = num.$to_i();
-      if ((($a = (((($b = s['$<'](0)) !== false && $b !== nil) ? $b : s['$>'](100)))) !== nil && (!$a.$$is_boolean || $a == true))) {
-        console.warn("bad speed given, setting to 100");
-        return self.speed = 100;
+      if ((($a = (((($b = s['$<'](0)) !== false && $b !== nil) ? $b : s['$>'](1000)))) !== nil && (!$a.$$is_boolean || $a == true))) {
+        console.warn("bad speed given, setting to 1000");
+        return self.speed = 1000;
         } else {
         self.speed = s;
         return console.info("setting speed to " + s);
@@ -212,7 +212,8 @@
         document.getElementById("mycanvas").getContext("2d").moveTo(self.x, self.y);;
       };
       self['$draw!']();
-      return self.$sleep((100)['$-'](self.speed));
+      setTimeout(function(){}, (1000)['$-'](self.speed));
+      return self;
     };
 
     def.$backward = function(distance) {
@@ -220,7 +221,8 @@
 
       self.$turn(-180);
       self.$forward(distance);
-      return self.$turn(180);
+      self.$turn(180);
+      return self;
     };
 
     def.$turn = function(degrees) {
@@ -228,7 +230,8 @@
 
       console.log( "turn " + degrees);;
       self.dir = self.dir['$+'](degrees);
-      return self.dir = self.dir['$%'](360);
+      self.dir = self.dir['$%'](360);
+      return self;
     };
 
     def.$turnleft = function(degrees) {
@@ -262,6 +265,7 @@
 
       args = $slice.call(arguments, 1);
       TMP_3.$$p = null;
+      console.log("method missing: " + method);
       return $scope.get('COLORS')['$[]'](method.$to_s());
     };
 

@@ -7,7 +7,7 @@ class Turtle
     @dir = -90
     @x = 200
     @y = 200
-    @speed = 100
+    @speed = 1000
 
     # this.tag = document.getElementById(tag) || tag;
     
@@ -76,16 +76,15 @@ class Turtle
     `document.getElementById("mycanvas").getContext("2d").fill();`
   end
 
-  # convenience method to begin a new path and to set your
-  # current location to @x, @y
+  # convenience method to begin a new path and to set your current location to @x, @y
   # see: http://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_canvas_beginpath
   def begin_path
     %x{
     console.log( "begin path" )
     context = document.getElementById("mycanvas").getContext("2d");
     context.beginPath();
-     context.moveTo(#{@x},#{@y});
-     console.log("starting at " + #{@x} + "," + #{@y});
+    context.moveTo(#{@x},#{@y});
+    console.log("starting at " + #{@x} + "," + #{@y});
     }
   end
   
@@ -94,7 +93,7 @@ class Turtle
     `document.getElementById("mycanvas").getContext("2d").closePath();`
   end
 
-  # this is a convenience method that actually implements the
+  # this is a convenience method that first sets the fill, then actually implements the
   # drawing commands using the stroke() method
   def draw!
     `console.log("drawing")`
@@ -172,9 +171,9 @@ class Turtle
 
   def speed(num)
     s = num.to_i
-    if(s < 0 || s > 100)
-      `console.warn("bad speed given, setting to 100")`
-      @speed = 100
+    if(s < 0 || s > 1000)
+      `console.warn("bad speed given, setting to 1000")`
+      @speed = 1000
     else
       @speed = s
       `console.info("setting speed to " + #{s})`
@@ -210,19 +209,22 @@ class Turtle
     self.draw! # fill(), then stroke()
 
     # TODO: get this to work! maybe need a javascript native sleep
-    sleep(100 - @speed)
+    `setTimeout(function(){}, #{1000 - @speed})`
+    self
   end
 
   def backward(distance)
     self.turn -180
     self.forward(distance)
     self.turn 180
+    self
   end
 
   def turn(degrees)
     `console.log( "turn " + #{degrees});`
     @dir += degrees
     @dir = @dir % 360;
+    self
   end
 
   def turnleft(degrees)
@@ -245,6 +247,7 @@ class Turtle
 
   # colors
   def method_missing(method, *args, &block)
+    `console.log("method missing: " + #{method})`
     return COLORS[method.to_s]
   end
 
