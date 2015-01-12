@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>  
+    <script src="file:///home/ethan/opal/build/opal.js"> </script>
+    <script src="file:///home/ethan/opal/build/opal-parser.js"> </script>
+    <script src="file:///home/ethan/opal/build/erb.js"></script>
+    <script src="file:///home/ethan/opal/build/math.js"></script>
+    <script src="file:///home/ethan/opal/build/stringio.js"></script>
+    <script src="file:///home/ethan/opal/build/base64.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/benchmark.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/buffer.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/date.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/delegate.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/dir.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/encoding.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/enumerator.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/erb.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/file.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/fileutils.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/forwardable.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/iconv.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/json.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/math.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/native.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/nodejs.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/observer.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/opal.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/opal-parser.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/opal-source-maps.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/ostruct.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/pathname.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/phantomjs.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/pp.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/process.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/promise.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/rbconfig.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/securerandom.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/set.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/singleton.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/source_map.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/sourcemap.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/stringio.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/strscan.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/template.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/thread.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/time.min.js"> </script>
+    <script src="file:///home/ethan/opal/build/yaml.min.js"> </script>
+
+    <script src="file:///home/ethan/coderclub_js/ruby_exec.js"> </script>
+    
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="codemirror-4.11/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-4.11/lib/codemirror.css">
+    <script src="codemirror-4.11/mode/ruby/ruby.js"></script>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="page-header"><h1>Ruby!</h1></div>
+  
+      <div class="row" id="wrapper">
+	<div id="editor_wrapper" class="col-md-8">
+	  <textarea cols="50" class="well" style="padding:0" id="code" name="code" rows="10">3.times do 
+  puts "Hello "
+end
+"hello"
+</textarea>
+	  <script> var myCodeMirror = CodeMirror.fromTextArea(code, {mode: "ruby", lineNumbers: true });
+	  </script>
+<!-- 
+	  <input name="commit" class="btn btn-primary" onclick="Opal.Opal.$turtle_exec(code.value)" type="button" value="Draw! (Cmd+Enter)" />
+--> <input name="commit" class="btn btn-primary" onclick="Opal.Opal.$ruby_exec(myCodeMirror.getValue())" type="button" value="Run! (Cmd+Enter)" />
+	</div>
+
+
+      </div>
+      <div class="row"> 
+	<div class="col-md-12" id="code_output">
+	</div>
+      </div>
+    </div>
+
+  </body>
+</html>
